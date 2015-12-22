@@ -13,7 +13,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.14.2">
-      <projectUrl>https://github.com/geonetwork/core-geonetwork/</projectUrl>
+      <projectUrl>https://github.com/neogeo-technologies/gl-catalogue/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
   </properties>
@@ -21,7 +21,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/geonetwork/core-geonetwork</url>
+        <url>https://github.com/neogeo-technologies/gl-catalogue</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -55,6 +55,7 @@
     <artifactId>geonetwork</artifactId>
   </rootModule>
   <goals>clean install -DskipTests</goals>
+  <mavenOpts>-Xmx512M -XX:MaxPermSize=256M</mavenOpts>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <ignoreUpstremChanges>true</ignoreUpstremChanges>
@@ -69,14 +70,22 @@
   <blockTriggerWhenBuilding>true</blockTriggerWhenBuilding>
   <settings class="jenkins.mvn.DefaultSettingsProvider"/>
   <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
-  <reporters/>
+  <reporters>
+    <hudson.maven.reporters.MavenMailer>
+      <recipients>fx.prunayre@gmail.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+      <perModuleEmail>false</perModuleEmail>
+    </hudson.maven.reporters.MavenMailer>
+  </reporters>
   <publishers/>
   <buildWrappers/>
   <prebuilders/>
   <postbuilders>
     <hudson.tasks.Shell>
-      <command>mkdir -p $WWW_ROOT/files.titellus.net/geonetwork/3.0.x;
-cp web/target/geonetwork.war $WWW_ROOT/files.titellus.net/geonetwork/3.0.x/.</command>
+      <command>mkdir -p $WWW_ROOT/files.titellus.net/geonetwork/grandlyon/3.0.x;
+cp web/target/geonetwork.war $WWW_ROOT/files.titellus.net/geonetwork/grandlyon/3.0.x/catalogue.war;
+</command>
     </hudson.tasks.Shell>
   </postbuilders>
   <runPostStepsIfResult>

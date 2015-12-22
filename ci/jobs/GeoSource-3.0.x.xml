@@ -13,7 +13,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.14.2">
-      <projectUrl>https://github.com/geonetwork/core-geonetwork/</projectUrl>
+      <projectUrl>https://github.com/geosource-catalogue/core-geonetwork/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
   </properties>
@@ -21,12 +21,12 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/geonetwork/core-geonetwork</url>
+        <url>https://github.com/geosource-catalogue/core-geonetwork</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/3.0.x</name>
+        <name>*/geosource-3.x</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -75,8 +75,11 @@
   <prebuilders/>
   <postbuilders>
     <hudson.tasks.Shell>
-      <command>mkdir -p $WWW_ROOT/files.titellus.net/geonetwork/3.0.x;
-cp web/target/geonetwork.war $WWW_ROOT/files.titellus.net/geonetwork/3.0.x/.</command>
+      <command>mkdir -p $WWW_ROOT/files.titellus.net/geosource/3.0.x;
+cp web/target/geonetwork.war $WWW_ROOT/files.titellus.net/geosource/3.0.x/geosource.war;
+cd $WORKSPACE/installer;
+ant;
+cp -fr $WORKSPACE/geosource-*/* $WWW_ROOT/files.titellus.net/geosource/3.0.x/.;</command>
     </hudson.tasks.Shell>
   </postbuilders>
   <runPostStepsIfResult>

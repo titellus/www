@@ -75,7 +75,7 @@
   <prebuilders/>
   <postbuilders>
     <hudson.tasks.Shell>
-      <command>mkdir -p $WWW_ROOT/files.titellus.net/geonetwork
+      <command>mkdir -p $WWW_ROOT/files.titellus.net/geonetwork;
 cp -fr target/doc $WWW_ROOT/files.titellus.net/geonetwork/.</command>
     </hudson.tasks.Shell>
   </postbuilders>

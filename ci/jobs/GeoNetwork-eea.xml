@@ -13,7 +13,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.14.2">
-      <projectUrl>https://github.com/geonetwork/core-geonetwork/</projectUrl>
+      <projectUrl>https://github.com/eea/geonetwork-eea/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
   </properties>
@@ -21,12 +21,12 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/geonetwork/core-geonetwork</url>
+        <url>https://github.com/eea/geonetwork-eea</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/3.0.x</name>
+        <name>*/eea-develop</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -55,6 +55,7 @@
     <artifactId>geonetwork</artifactId>
   </rootModule>
   <goals>clean install -DskipTests</goals>
+  <mavenOpts>-Xmx512M -XX:MaxPermSize=256M</mavenOpts>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <ignoreUpstremChanges>true</ignoreUpstremChanges>
@@ -75,8 +76,18 @@
   <prebuilders/>
   <postbuilders>
     <hudson.tasks.Shell>
-      <command>mkdir -p $WWW_ROOT/files.titellus.net/geonetwork/3.0.x;
-cp web/target/geonetwork.war $WWW_ROOT/files.titellus.net/geonetwork/3.0.x/.</command>
+      <command>mkdir -p $WWW_ROOT/files.titellus.net/geonetwork/eea;
+cd $WORKSPACE;
+mvn clean install -DskipTests;
+cd web;
+mvn package -DskipTests -Penv-catalogue;
+mvn package -DskipTests -Penv-internal-catalogue;
+mvn package -DskipTests -Penv-editor-catalogue;
+mvn package -DskipTests -Penv-map-catalogue;
+
+tar cvfz target/eea-catalogues.tar.gz target/catalogue.war target/internal-catalogue.war target/editor-catalogue.war target/map-catalogue.war;
+cp target/eea-catalogues.tar.gz $WWW_ROOT/files.titellus.net/geonetwork/eea/.;
+</command>
     </hudson.tasks.Shell>
   </postbuilders>
   <runPostStepsIfResult>
