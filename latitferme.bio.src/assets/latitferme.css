@@ -1,0 +1,14 @@
+ul.photo-gallery li {
+    display: inline-grid;
+    width: 48%;
+    padding: 2px;
+}
+
+.page-content .wrapper {
+    background-color: white;
+    padding-top: 20px;
+}
+
+.page-content {
+    background-size: cover;
+}
